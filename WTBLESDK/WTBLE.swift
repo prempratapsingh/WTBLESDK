@@ -24,28 +24,32 @@ public class WTBLE {
         return _bleSDK!
     }
     
-    func startScan() {
+    public func startScan() {
         self.bleManager?.startScan()
     }
 
-    func cancelScan() {
+    public func cancelScan() {
         self.bleManager?.cancelScan()
     }
 
-    func tryConnectPeripheral(_ peripheral: CBPeripheral) {
+    public func tryConnectPeripheral(_ peripheral: CBPeripheral) {
         self.bleManager?.tryConnectPeripheral(peripheral)
     }
 
-    func cancelConnection() {
+    public func cancelConnection() {
         self.bleManager?.cancelConnection()
     }
 
-    func tryReceiveDataAfterConnected() {
+    public func tryReceiveDataAfterConnected() {
         self.bleManager?.tryReceiveDataAfterConnected()
     }
 
-    func readRssi() {
+    public func readRssi() {
         self.bleManager?.readRssi()
+    }
+    
+    public func writeData(_ data: Data) {
+        self.bleManager?.writeData(data)
     }
 
     func getDeviceType() -> WTBTType {
@@ -53,9 +57,5 @@ public class WTBLE {
             return .BT_BLE
         }
         return manager.getType()
-    }
-
-    func writeData(_ data: Data) {
-        self.bleManager?.writeData(data)
     }
 }

@@ -11,23 +11,21 @@ import CoreBluetooth
 public class WTBLECentralManager: NSObject {
     
     // MARK: Public properties
-    var callback: WTBLECallback
+    
+    var callback: WTBLECallback = WTBLECallback()
+    
     
     // MARK: Private properties
     
-    private var manager: CBCentralManager
+    private lazy var manager: CBCentralManager = {
+        return CBCentralManager(delegate: self, queue: DispatchQueue.main)
+    }()
+    
     private var peripheral: CBPeripheral?
     private var writeCharacteristic: CBCharacteristic?
     private var readCharacteristic: CBCharacteristic?
     private var wtBTType: WTBTType = .BT_BLE
     
-    // MARK: Initializer
-    
-    override convenience init() {
-        self.init()
-        self.manager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
-        self.callback = WTBLECallback()
-    }
     
     // MARK: Public methods
     
@@ -99,7 +97,7 @@ extension WTBLECentralManager: CBCentralManagerDelegate {
     }
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard let name = peripheral.name, name is String, !name.isEmpty else { return }
+        guard let name = peripheral.name, !name.isEmpty else { return }
         if name.contains("HC") || name.contains("WT") {
             callback.blockOnDiscoverPeripherals?(manager, peripheral, advertisementData, RSSI)
         }
