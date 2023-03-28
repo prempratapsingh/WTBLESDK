@@ -13,7 +13,7 @@ public class WTBLE {
     public var bleManager: WTBLECentralManager?
     public var bleCallback: WTBLECallback?
     
-    static let sharedInstance = WTBLE()
+    public static let sharedInstance = WTBLE()
         
     private init() {
         self.bleManager = WTBLECentralManager()
