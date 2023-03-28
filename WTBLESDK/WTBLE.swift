@@ -13,15 +13,11 @@ public class WTBLE {
     public var bleManager: WTBLECentralManager?
     public var bleCallback: WTBLECallback?
     
-    private static var _bleSDK: WTBLE?
-
-    public static func sharedInstance() -> WTBLE {
-        if _bleSDK == nil {
-            _bleSDK = WTBLE()
-            _bleSDK?.bleManager = WTBLECentralManager()
-            _bleSDK?.bleCallback = _bleSDK?.bleManager?.callback
-        }
-        return _bleSDK!
+    static let sharedInstance = WTBLE()
+        
+    private init() {
+        self.bleManager = WTBLECentralManager()
+        self.bleCallback = self.bleManager?.callback
     }
     
     public func startScan() {
@@ -52,7 +48,7 @@ public class WTBLE {
         self.bleManager?.writeData(data)
     }
 
-    func getDeviceType() -> WTBTType {
+    public func getDeviceType() -> WTBTType {
         guard let manager = self.bleManager else {
             return .BT_BLE
         }

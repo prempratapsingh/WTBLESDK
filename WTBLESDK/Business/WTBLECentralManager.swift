@@ -191,7 +191,7 @@ extension WTBLECentralManager: CBPeripheralDelegate {
     }
 }
 
-enum WTBTType: Int {
+public enum WTBTType: Int {
     case BT_BLE = 0
     case BT_HC
 }
